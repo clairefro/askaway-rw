@@ -2,7 +2,7 @@
 
 A live, anonymous Q&A tool for webinars.
 
-### Features
+## Features
 #### Realtime
 
 See which question is being answered by the speaker right now
@@ -26,6 +26,25 @@ Export all the questions and answers at the end of the session at the click of a
 #### Ephemeral
 
 Data for rooms, questions and replies is regularly deleted. Only metadata (like # of rooms created, # of questions asked, etc.) is persisted. It's like your conversation never happened.
+
+
+## Roadmap
+- [x] hook up DB
+- [ ] create rooms
+- [ ] view rooms
+- [ ] create questions
+- [ ] view questions in room
+- [ ] upvote questions in room
+- [ ] view questions RT in room
+- [ ] set user alias
+- [ ] create replies to questions
+- [ ] view replies to questions
+- [ ] view replies to questions
+- [ ] admin: select featured question
+- [ ] admin: set question to answered
+- [ ] admin: delete questions
+- [ ] admin: delete replies
+- [ ] style
 
 ## Dev
 
