@@ -44,6 +44,7 @@ Data for rooms, questions and replies is regularly deleted. Only metadata (like 
 - [ ] admin: set question to answered
 - [ ] admin: delete questions
 - [ ] admin: delete replies
+- [ ] export to json
 - [ ] style
 
 ## Dev
