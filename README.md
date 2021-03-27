@@ -1,0 +1,46 @@
+## Askaway
+
+A live, anonymous Q&A tool for webinars.
+
+### Features
+#### Realtime
+
+See which question is being answered by the speaker right now
+
+#### No auth needed
+
+No signups, no personal data collected. Just navigate to a link and make up a username - anyone can create rooms, ask questions and upvote other's questions
+
+#### Prioritized questions
+
+Live upvoting helps burning questions bubble their way to the top
+
+#### Walk-in's welcome
+
+Drop in late? See what's already been asked and answered.
+
+#### Take aways
+
+Export all the questions and answers at the end of the session at the click of a button.
+
+#### Ephemeral
+
+Data for rooms, questions and replies is regularly deleted. Only metadata (like # of rooms created, # of questions asked, etc.) is persisted. It's like your conversation never happened.
+
+## Dev
+
+This project built with RedwoodJS.
+
+### Install
+
+```terminal
+yarn install
+```
+
+### Start
+
+```terminal
+yarn rw dev
+```
+
+Your browser should open automatically to `http://localhost:8910` to see the web app. Lambda functions run on `http://localhost:8911` and are also proxied to `http://localhost:8910/.redwood/functions/*`.
