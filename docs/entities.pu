@@ -1,0 +1,31 @@
+@startuml Askaway entities
+
+interface Room {
+  +id uuid
+  secret string
+  ....
+  createdAt string
+}
+
+interface Question {
+  +id uuid
+  ~roomId uuid
+  username string
+  body string
+  votes number
+  answered boolean
+  ....
+  createdAt string
+}
+
+interface Reply {
+  +id uuid
+  ~questionId uuid
+  username string
+  body string
+  votes number
+  ....
+  createdAt string
+}
+
+@enduml

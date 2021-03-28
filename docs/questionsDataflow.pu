@@ -1,0 +1,9 @@
+@startuml Askaway question dataflow
+
+
+"Web client" <-> DB: establish socket connection
+"Web client" -> API: create question
+API -> DB: insert question
+DB -> "Web client": Inform room members of new question
+
+@enduml
