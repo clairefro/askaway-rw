@@ -20,6 +20,7 @@
   },
   "resolutions": {
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "apollo-server-core": "2.18.2"
   }
 }
