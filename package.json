@@ -7,6 +7,9 @@
       "packages/*"
     ]
   },
+  "scripts": {
+    "postgres:test": "docker-compose -f ./testdb/docker-compose.yml up -d"
+  },
   "devDependencies": {
     "@redwoodjs/core": "^0.28.0"
   },

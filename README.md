@@ -64,3 +64,12 @@ yarn rw dev
 ```
 
 Your browser should open automatically to `http://localhost:8910` to see the web app. Lambda functions run on `http://localhost:8911` and are also proxied to `http://localhost:8910/.redwood/functions/*`.
+
+### Testing
+
+`yarn rw test`
+
+To run tests, a local postgres db must be set up.
+
+Follow the instructions [here](https://redwoodjs.com/docs/local-postgres-setup#creating-a-database) to set up a postgres db.
+

@@ -1,8 +1,14 @@
 import { db } from 'src/lib/db'
-import { hash } from '../utils/encryption'
+import { hash } from '../../utils/encryption'
+
+const publicRoom = ({ id, createdAt, updatedAt }) => ({
+  id,
+  createdAt,
+  updatedAt,
+})
 
 export const rooms = () => {
-  return db.room.findMany()
+  return db.room.findMany().then((res) => res.map(publicRoom))
 }
 
 export const room = ({ id }) => {
@@ -14,21 +20,28 @@ export const room = ({ id }) => {
 export const createRoom = async ({ input }) => {
   // encrypt the room secret
   const { secret } = input
-
   const hashedSecret = await hash(secret)
-
   const encryptedInput = { ...input, secret: hashedSecret }
 
-  return db.room.create({
-    data: encryptedInput,
-  })
+  return db.room
+    .create({
+      data: encryptedInput,
+    })
+    .then(publicRoom)
 }
 
-export const updateRoom = ({ id, input }) => {
-  return db.room.update({
-    data: input,
-    where: { id },
-  })
+export const updateRoom = async ({ id, input }) => {
+  // encrypt the room secret
+  const { secret } = input
+  const hashedSecret = await hash(secret)
+  const encryptedInput = { ...input, secret: hashedSecret }
+
+  return db.room
+    .update({
+      data: encryptedInput,
+      where: { id },
+    })
+    .then(publicRoom)
 }
 
 export const deleteRoom = ({ id }) => {
