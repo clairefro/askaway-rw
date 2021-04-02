@@ -7,13 +7,14 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 
-const formatDatetime = (value) => {
-  if (value) {
-    return value.replace(/:\d{2}\.\d{3}\w/, '')
-  }
-}
+// const formatDatetime = (value) => {
+//   if (value) {
+//     return value.replace(/:\d{2}\.\d{3}\w/, '')
+//   }
+// }
 
 const RoomForm = (props) => {
+  console.log(props.onSave)
   const onSubmit = (data) => {
     props.onSave(data, props?.room?.id)
   }
@@ -27,6 +28,22 @@ const RoomForm = (props) => {
           titleClassName="rw-form-error-title"
           listClassName="rw-form-error-list"
         />
+
+        <Label
+          name="title"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Title
+        </Label>
+        <TextField
+          name="title"
+          defaultValue={props.room?.title}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true }}
+        />
+        <FieldError name="title" className="rw-field-error" />
 
         <Label
           name="secret"

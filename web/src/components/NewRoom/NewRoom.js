@@ -15,9 +15,10 @@ const CREATE_ROOM_MUTATION = gql`
 
 const NewRoom = () => {
   const [createRoom, { loading, error }] = useMutation(CREATE_ROOM_MUTATION, {
-    onCompleted: () => {
+    onCompleted: (e) => {
+      const id = e.createRoom.id
       toast.success('Room created')
-      navigate(routes.rooms())
+      navigate(routes.room({ id }))
     },
   })
 

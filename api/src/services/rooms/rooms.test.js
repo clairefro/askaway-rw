@@ -1,5 +1,5 @@
 import { rooms, room, createRoom, updateRoom, deleteRoom } from './rooms'
-import { clearDbTables } from '../../utils/testUtils'
+// import { clearDbTables } from '../../utils/testUtils'
 
 // beforeAll(async () => {
 //   // await clearDbTables()
@@ -10,8 +10,6 @@ import { clearDbTables } from '../../utils/testUtils'
 describe('rooms', () => {
   scenario('returns all rooms', async (scenario) => {
     const result = await rooms()
-
-    console.log({ result })
 
     expect(result.length).toEqual(Object.keys(scenario.room).length) // only true before "create" test
   })
@@ -37,7 +35,7 @@ describe('rooms', () => {
     const NEW_SECRET = 'newsecret'
 
     const original = await room({ id: scenario.room.one.id })
-    console.log({ original })
+
     const result = await updateRoom({
       id: original.id,
       input: { secret: NEW_SECRET },

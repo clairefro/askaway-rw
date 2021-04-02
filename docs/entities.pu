@@ -3,6 +3,7 @@
 interface Room {
   +id uuid
   secret string
+  title string
   ....
   createdAt string
 }

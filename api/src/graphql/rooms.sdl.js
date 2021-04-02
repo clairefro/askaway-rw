@@ -1,6 +1,7 @@
 export const schema = gql`
   type Room {
     id: String!
+    title: String!
     secret: String!
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -12,10 +13,12 @@ export const schema = gql`
   }
 
   input CreateRoomInput {
+    title: String!
     secret: String!
   }
 
   input UpdateRoomInput {
+    title: String
     secret: String
   }
 

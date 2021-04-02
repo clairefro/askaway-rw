@@ -1,8 +1,9 @@
 import { db } from 'src/lib/db'
 import { hash } from '../../utils/encryption'
 
-const publicRoom = ({ id, createdAt, updatedAt }) => ({
+const publicRoom = ({ id, createdAt, updatedAt, title }) => ({
   id,
+  title,
   createdAt,
   updatedAt,
 })
@@ -31,14 +32,18 @@ export const createRoom = async ({ input }) => {
 }
 
 export const updateRoom = async ({ id, input }) => {
-  // encrypt the room secret
+  let data = input
+
+  // encrypt the room secret if changed
   const { secret } = input
-  const hashedSecret = await hash(secret)
-  const encryptedInput = { ...input, secret: hashedSecret }
+  if (secret) {
+    const hashedSecret = await hash(secret)
+    data = { ...input, secret: hashedSecret }
+  }
 
   return db.room
     .update({
-      data: encryptedInput,
+      data,
       where: { id },
     })
     .then(publicRoom)
