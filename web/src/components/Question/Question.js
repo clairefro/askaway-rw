@@ -1,14 +1,12 @@
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { Link, routes, navigate } from '@redwoodjs/router'
-import NewQuestion from 'src/components/NewQuestion'
-import QuestionsCell from 'src/components/QuestionsCell'
 
-import { QUERY } from 'src/components/RoomsCell'
+import { QUERY } from 'src/components/QuestionsCell'
 
-const DELETE_ROOM_MUTATION = gql`
-  mutation DeleteRoomMutation($id: String!) {
-    deleteRoom(id: $id) {
+const DELETE_QUESTION_MUTATION = gql`
+  mutation DeleteQuestionMutation($id: String!) {
+    deleteQuestion(id: $id) {
       id
     }
   }
@@ -34,17 +32,17 @@ const checkboxInputTag = (checked) => {
   return <input type="checkbox" checked={checked} disabled />
 }
 
-const Room = ({ room }) => {
-  const [deleteRoom] = useMutation(DELETE_ROOM_MUTATION, {
+const Question = ({ question }) => {
+  const [deleteQuestion] = useMutation(DELETE_QUESTION_MUTATION, {
     onCompleted: () => {
-      toast.success('Room deleted')
-      navigate(routes.rooms())
+      toast.success('Question deleted')
+      navigate(routes.questions())
     },
   })
 
   const onDeleteClick = (id) => {
-    if (confirm('Are you sure you want to delete room ' + id + '?')) {
-      deleteRoom({ variables: { id } })
+    if (confirm('Are you sure you want to delete question ' + id + '?')) {
+      deleteQuestion({ variables: { id } })
     }
   }
 
@@ -53,49 +51,59 @@ const Room = ({ room }) => {
       <div className="rw-segment">
         <header className="rw-segment-header">
           <h2 className="rw-heading rw-heading-secondary">
-            Room &quot;{room.title}&quot; Detail
+            Question {question.id} Detail
           </h2>
         </header>
         <table className="rw-table">
           <tbody>
             <tr>
               <th>Id</th>
-              <td>{room.id}</td>
+              <td>{question.id}</td>
             </tr>
             <tr>
-              <th>Title</th>
-              <td>{room.title}</td>
+              <th>Username</th>
+              <td>{question.username}</td>
+            </tr>
+            <tr>
+              <th>Body</th>
+              <td>{question.body}</td>
+            </tr>
+            <tr>
+              <th>Votes</th>
+              <td>{question.votes}</td>
+            </tr>
+            <tr>
+              <th>Room id</th>
+              <td>{question.roomId}</td>
             </tr>
             <tr>
               <th>Created at</th>
-              <td>{timeTag(room.createdAt)}</td>
+              <td>{timeTag(question.createdAt)}</td>
             </tr>
             <tr>
               <th>Updated at</th>
-              <td>{timeTag(room.updatedAt)}</td>
+              <td>{timeTag(question.updatedAt)}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <nav className="rw-button-group">
         <Link
-          to={routes.editRoom({ id: room.id })}
+          to={routes.editQuestion({ id: question.id })}
           className="rw-button rw-button-blue"
         >
           Edit
         </Link>
-        <button
+        <a
           href="#"
           className="rw-button rw-button-red"
-          onClick={() => onDeleteClick(room.id)}
+          onClick={() => onDeleteClick(question.id)}
         >
           Delete
-        </button>
+        </a>
       </nav>
-      <NewQuestion roomId={room.id} />
-      <QuestionsCell roomId={room.id} />
     </>
   )
 }
 
-export default Room
+export default Question

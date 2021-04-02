@@ -1,11 +1,4 @@
 import { rooms, room, createRoom, updateRoom, deleteRoom } from './rooms'
-// import { clearDbTables } from '../../utils/testUtils'
-
-// beforeAll(async () => {
-//   // await clearDbTables()
-//   // await db.room.deleteMany()
-//   console.log('done')
-// })
 
 describe('rooms', () => {
   scenario('returns all rooms', async (scenario) => {

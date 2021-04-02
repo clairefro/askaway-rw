@@ -17,13 +17,16 @@ model Room {
   title     String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now())
+  questions Question[]
 }
 
-// model Question {
-//   id        String     @id @default(uuid())
-//   username  String
-//   body      String
-//   votes     Int
-//   createdAt DateTime   @default(now())
-//   updatedAt DateTime   @default(now())
-// }
+model Question {
+  id        String   @id @default(uuid())
+  username  String
+  body      String
+  votes     Int      @default(0)
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
