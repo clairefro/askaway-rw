@@ -51,7 +51,7 @@ const Room = ({ room }) => {
       <div className="rw-segment">
         <header className="rw-segment-header">
           <h2 className="rw-heading rw-heading-secondary">
-            Room {room.id} Detail
+            Room &quot;{room.title}&quot; Detail
           </h2>
         </header>
         <table className="rw-table">
@@ -61,8 +61,8 @@ const Room = ({ room }) => {
               <td>{room.id}</td>
             </tr>
             <tr>
-              <th>Secret</th>
-              <td>{room.secret}</td>
+              <th>Title</th>
+              <td>{room.title}</td>
             </tr>
             <tr>
               <th>Created at</th>

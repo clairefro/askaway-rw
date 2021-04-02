@@ -6,7 +6,7 @@ export const QUERY = gql`
   query ROOMS {
     rooms {
       id
-      secret
+      title
       createdAt
       updatedAt
     }

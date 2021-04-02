@@ -4,7 +4,7 @@ export const QUERY = gql`
   query FIND_ROOM_BY_ID($id: String!) {
     room: room(id: $id) {
       id
-      secret
+      title
       createdAt
       updatedAt
     }

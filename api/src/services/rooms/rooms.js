@@ -13,9 +13,11 @@ export const rooms = () => {
 }
 
 export const room = ({ id }) => {
-  return db.room.findUnique({
-    where: { id },
-  })
+  return db.room
+    .findUnique({
+      where: { id },
+    })
+    .then((res) => (res ? publicRoom(res) : null))
 }
 
 export const createRoom = async ({ input }) => {
@@ -50,7 +52,9 @@ export const updateRoom = async ({ id, input }) => {
 }
 
 export const deleteRoom = ({ id }) => {
-  return db.room.delete({
-    where: { id },
-  })
+  return db.room
+    .delete({
+      where: { id },
+    })
+    .then(publicRoom)
 }
