@@ -14,7 +14,6 @@ import {
 // }
 
 const RoomForm = (props) => {
-  console.log(props.onSave)
   const onSubmit = (data) => {
     props.onSave(data, props?.room?.id)
   }

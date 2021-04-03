@@ -62,7 +62,7 @@ const RoomsList = ({ rooms }) => {
         <thead>
           <tr>
             <th>Id</th>
-            <th>Secret</th>
+            <th>Title</th>
             <th>Created at</th>
             <th>Updated at</th>
             <th>&nbsp;</th>
@@ -72,7 +72,7 @@ const RoomsList = ({ rooms }) => {
           {rooms.map((room) => (
             <tr key={room.id}>
               <td>{truncate(room.id)}</td>
-              <td>{truncate(room.secret)}</td>
+              <td>{truncate(room.title)}</td>
               <td>{timeTag(room.createdAt)}</td>
               <td>{timeTag(room.updatedAt)}</td>
               <td>

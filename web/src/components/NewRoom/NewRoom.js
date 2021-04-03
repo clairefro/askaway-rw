@@ -2,6 +2,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { navigate, routes } from '@redwoodjs/router'
 import RoomForm from 'src/components/RoomForm'
+import { WhitePadding } from 'src/components/custom/blocks/WhitePadding'
 
 import { QUERY } from 'src/components/RoomsCell'
 
@@ -27,14 +28,10 @@ const NewRoom = () => {
   }
 
   return (
-    <div className="rw-segment">
-      <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">New Room</h2>
-      </header>
-      <div className="rw-segment-main">
-        <RoomForm onSave={onSave} loading={loading} error={error} />
-      </div>
-    </div>
+    <WhitePadding>
+      <h2>Create a room</h2>
+      <RoomForm onSave={onSave} loading={loading} error={error} />
+    </WhitePadding>
   )
 }
 
