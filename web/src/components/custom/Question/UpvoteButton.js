@@ -24,7 +24,6 @@ export const UpvoteButton = ({ question }) => {
   )
 
   const handleClick = () => {
-    // upvote
     upvoteQuestion({ variables: { id } })
   }
   return <button onClick={handleClick}>⬆</button>

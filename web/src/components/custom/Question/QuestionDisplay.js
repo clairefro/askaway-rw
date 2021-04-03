@@ -5,9 +5,7 @@ export const QuestionDisplay = ({ question }) => {
   return (
     <div className="p-4 flex justify-between">
       <div>
-        <div>
-          <p>{question.body}</p>
-        </div>
+        <p>{question.body}</p>
         <div className="text-sm mt-2">
           <p>
             by <span className="font-semibold">{question.username}</span> at{' '}
