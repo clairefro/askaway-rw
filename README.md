@@ -30,9 +30,9 @@ Data for rooms, questions and replies is regularly deleted. Only metadata (like 
 
 ## Roadmap
 - [x] hook up DB
-- [ ] create rooms
+- [x] create rooms
 - [ ] view rooms
-- [ ] create questions
+- [x] create questions
 - [ ] view questions in room
 - [ ] upvote questions in room
 - [ ] view questions RT in room
