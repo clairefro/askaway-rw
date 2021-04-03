@@ -1,5 +1,6 @@
 import React from 'react'
 import { useMutation } from '@redwoodjs/web'
+import { QUERY } from 'src/components/QuestionsCell'
 
 const UPVOTE_QUESTION_MUTATION = gql`
   mutation UpvoteQuestionMutation($id: String!) {
@@ -9,21 +10,22 @@ const UPVOTE_QUESTION_MUTATION = gql`
   }
 `
 
-export const UpvoteButton = ({ questionId }) => {
+export const UpvoteButton = ({ question }) => {
+  const { id, roomId } = question
   const [upvoteQuestion, { loading, error }] = useMutation(
     UPVOTE_QUESTION_MUTATION,
     {
-      onCompleted: (whatThis) => {
-        // toast.success('Question updated')
-        // navigate(routes.questions())
-        console.log({ whatThis })
+      onCompleted: () => {
+        console.log(`upvoted ${id}`)
       },
+      refetchQueries: [{ query: QUERY, variables: { roomId } }],
+      awaitRefetchQueries: true,
     }
   )
 
   const handleClick = () => {
     // upvote
-    upvoteQuestion({ variables: { id: questionId } })
+    upvoteQuestion({ variables: { id } })
   }
   return <button onClick={handleClick}>⬆</button>
 }

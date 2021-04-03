@@ -21,11 +21,15 @@ const NewQuestion = ({ roomId }) => {
         toast.success('Question created')
         navigate(routes.room({ id: roomId }))
       },
+      refetchQueries: [{ query: QUERY, variables: { roomId } }],
+      awaitRefetchQueries: true,
     }
   )
 
   const onSave = (input) => {
-    createQuestion({ variables: { input: { ...input, roomId } } })
+    createQuestion({
+      variables: { input: { ...input, roomId } },
+    })
   }
 
   return (

@@ -17,7 +17,7 @@ export const QuestionDisplay = ({ question }) => {
       </div>
       <div>
         {question.votes}
-        <UpvoteButton questionId={question.id} />
+        <UpvoteButton question={question} />
       </div>
     </div>
   )

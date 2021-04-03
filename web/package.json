@@ -16,9 +16,11 @@
     "@redwoodjs/forms": "^0.28.0",
     "@redwoodjs/router": "^0.28.0",
     "@redwoodjs/web": "^0.28.0",
+    "@supabase/realtime-js": "1.0.6",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "unique-names-generator": "4.4.0"
   },
   "devDependencies": {
     "autoprefixer": "9.8.6",
