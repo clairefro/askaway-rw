@@ -3,6 +3,7 @@ import {
   question,
   createQuestion,
   updateQuestion,
+  upvoteQuestion,
   deleteQuestion,
 } from './questions'
 
@@ -51,6 +52,17 @@ describe('questions', () => {
     })
 
     expect(result.votes).toEqual(NEW_VOTES)
+  })
+
+  scenario('upvotes a question', async (scenario) => {
+    const original = await question({ id: scenario.question.r1q1.id })
+
+    const res = await upvoteQuestion({ id: original.id })
+
+    const updated = await question({ id: scenario.question.r1q1.id })
+
+    expect(updated.votes).toEqual(original.votes + 1)
+    expect(res.id).toBeDefined()
   })
 
   scenario('deletes a question', async (scenario) => {

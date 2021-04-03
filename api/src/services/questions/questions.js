@@ -33,6 +33,13 @@ export const updateQuestion = ({ id, input }) => {
   })
 }
 
+export const upvoteQuestion = async ({ id }) => {
+  await db.$executeRaw(
+    `update "Question" set votes = votes + 1 where id = '${id}'`
+  )
+  return { id }
+}
+
 export const deleteQuestion = ({ id }) => {
   return db.question.delete({
     where: { id },

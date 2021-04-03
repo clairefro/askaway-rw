@@ -1,11 +1,14 @@
-import RoomsLayout from 'src/layouts/RoomsLayout'
 import RoomCell from 'src/components/RoomCell'
+import NewQuestion from 'src/components/NewQuestion'
+import QuestionsCell from 'src/components/QuestionsCell'
 
 const RoomPage = ({ id }) => {
   return (
-    <RoomsLayout>
+    <div>
       <RoomCell id={id} />
-    </RoomsLayout>
+      <NewQuestion roomId={id} />
+      <QuestionsCell roomId={id} />
+    </div>
   )
 }
 

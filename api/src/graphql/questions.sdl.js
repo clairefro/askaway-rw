@@ -10,6 +10,10 @@ export const schema = gql`
     updatedAt: DateTime!
   }
 
+  type QuestionUpvoteResponse {
+    id: String!
+  }
+
   type Query {
     questions(roomId: String!): [Question!]!
     question(id: String!): Question
@@ -32,6 +36,7 @@ export const schema = gql`
   type Mutation {
     createQuestion(input: CreateQuestionInput!): Question!
     updateQuestion(id: String!, input: UpdateQuestionInput!): Question!
+    upvoteQuestion(id: String!): QuestionUpvoteResponse!
     deleteQuestion(id: String!): Question!
   }
 `

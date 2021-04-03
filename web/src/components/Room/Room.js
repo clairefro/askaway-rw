@@ -3,6 +3,7 @@ import { toast } from '@redwoodjs/web/toast'
 import { Link, routes, navigate } from '@redwoodjs/router'
 import NewQuestion from 'src/components/NewQuestion'
 import QuestionsCell from 'src/components/QuestionsCell'
+import { WhitePadding } from 'src/components/custom/blocks/WhitePadding'
 
 import { QUERY } from 'src/components/RoomsCell'
 
@@ -30,9 +31,9 @@ const timeTag = (datetime) => {
   )
 }
 
-const checkboxInputTag = (checked) => {
-  return <input type="checkbox" checked={checked} disabled />
-}
+// const checkboxInputTag = (checked) => {
+//   return <input type="checkbox" checked={checked} disabled />
+// }
 
 const Room = ({ room }) => {
   const [deleteRoom] = useMutation(DELETE_ROOM_MUTATION, {
@@ -48,35 +49,15 @@ const Room = ({ room }) => {
     }
   }
 
+  console.log(room.createdAt)
+
   return (
     <>
-      <div className="rw-segment">
-        <header className="rw-segment-header">
-          <h2 className="rw-heading rw-heading-secondary">
-            Room &quot;{room.title}&quot; Detail
-          </h2>
-        </header>
-        <table className="rw-table">
-          <tbody>
-            <tr>
-              <th>Id</th>
-              <td>{room.id}</td>
-            </tr>
-            <tr>
-              <th>Title</th>
-              <td>{room.title}</td>
-            </tr>
-            <tr>
-              <th>Created at</th>
-              <td>{timeTag(room.createdAt)}</td>
-            </tr>
-            <tr>
-              <th>Updated at</th>
-              <td>{timeTag(room.updatedAt)}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <WhitePadding>
+        <div className="text-center">
+          <h1>{room.title}</h1>
+        </div>
+      </WhitePadding>
       <nav className="rw-button-group">
         <Link
           to={routes.editRoom({ id: room.id })}
@@ -85,15 +66,12 @@ const Room = ({ room }) => {
           Edit
         </Link>
         <button
-          href="#"
           className="rw-button rw-button-red"
           onClick={() => onDeleteClick(room.id)}
         >
           Delete
         </button>
       </nav>
-      <NewQuestion roomId={room.id} />
-      <QuestionsCell roomId={room.id} />
     </>
   )
 }
