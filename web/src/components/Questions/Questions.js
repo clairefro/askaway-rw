@@ -61,8 +61,8 @@ const QuestionsList = ({ questions }) => {
   return (
     <WhitePadding>
       {questions.map((question) => (
-        <>
-          <QuestionDisplay key={question.id} question={question} />
+        <div key={question.id}>
+          <QuestionDisplay question={question} />
           <nav className="rw-table-actions">
             <Link
               to={routes.question({ id: question.id })}
@@ -86,7 +86,7 @@ const QuestionsList = ({ questions }) => {
               Delete
             </button>
           </nav>
-        </>
+        </div>
       ))}
     </WhitePadding>
   )
