@@ -1,5 +1,6 @@
 import { db } from 'src/lib/db'
-import { hash } from '../../utils/encryption'
+import { hash, compare } from '../../utils/encryption'
+import { btoa } from '../../utils/b64'
 
 const publicRoom = ({ id, createdAt, updatedAt, title }) => ({
   id,
@@ -57,4 +58,38 @@ export const deleteRoom = ({ id }) => {
       where: { id },
     })
     .then(publicRoom)
+}
+
+export const getAdminToken = async ({ input }) => {
+  const { roomId, secret: userSecret } = input
+  // get room with id roomId
+  const room = await db.room.findUnique({
+    where: { id: roomId },
+  })
+  if (!room) throw new Error(`Room with id '${roomId}' not found`)
+
+  // compare input.secret with room.secret
+  const { secret } = room
+
+  console.log({ secret })
+  console.log({ userSecret })
+
+  const isValid = await compare(userSecret, secret)
+  console.log({ isValid })
+
+  // shitty handshake will be hashed 'createdAt' time + secret
+  const createdAtTime = new Date(room.createdAt).getTime()
+  const tokenHash = await hash(createdAtTime + secret)
+
+  // if valid, return token
+  if (isValid) {
+    const tokenObj = {
+      roomId,
+      token: tokenHash,
+    }
+    const token = btoa(JSON.stringify(tokenObj))
+    return { token, isValid: true }
+  }
+  // else return false
+  return { isValid: false }
 }

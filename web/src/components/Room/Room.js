@@ -1,11 +1,10 @@
+import { useEffect, useState } from 'react'
 import { useMutation } from '@redwoodjs/web'
+import { useLazyQuery } from '@apollo/client' // SHADY
 import { toast } from '@redwoodjs/web/toast'
 import { Link, routes, navigate } from '@redwoodjs/router'
-import NewQuestion from 'src/components/NewQuestion'
-import QuestionsCell from 'src/components/QuestionsCell'
 import { WhitePadding } from 'src/components/custom/blocks/WhitePadding'
-
-import { QUERY } from 'src/components/RoomsCell'
+import { useCookies } from 'react-cookie'
 
 const DELETE_ROOM_MUTATION = gql`
   mutation DeleteRoomMutation($id: String!) {
@@ -14,28 +13,66 @@ const DELETE_ROOM_MUTATION = gql`
     }
   }
 `
+const GET_ADMIN_TOKEN_QUERY = gql`
+  query GetAdminToken($input: GetAdminTokenInput!) {
+    getAdminToken(input: $input) {
+      isValid
+      token
+    }
+  }
+`
 
-const jsonDisplay = (obj) => {
-  return (
-    <pre>
-      <code>{JSON.stringify(obj, null, 2)}</code>
-    </pre>
-  )
-}
+// const jsonDisplay = (obj) => {
+//   return (
+//     <pre>
+//       <code>{JSON.stringify(obj, null, 2)}</code>
+//     </pre>
+//   )
+// }
 
-const timeTag = (datetime) => {
-  return (
-    <time dateTime={datetime} title={datetime}>
-      {new Date(datetime).toUTCString()}
-    </time>
-  )
-}
+// const timeTag = (datetime) => {
+//   return (
+//     <time dateTime={datetime} title={datetime}>
+//       {new Date(datetime).toUTCString()}
+//     </time>
+//   )
+// }
 
 // const checkboxInputTag = (checked) => {
 //   return <input type="checkbox" checked={checked} disabled />
 // }
 
 const Room = ({ room }) => {
+  const { id, title } = room
+  const [cookies, setCookies] = useCookies()
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [
+    getAdminToken,
+    { loading: getAdminTokenLoading, data: getAdminTokenData },
+  ] = useLazyQuery(GET_ADMIN_TOKEN_QUERY)
+
+  console.log({ cookies })
+
+  // check room admin on mount and cookie change
+  useEffect(() => {
+    const token = cookies[id]
+    if (!token) {
+      setIsAdmin(false)
+    } else {
+      setIsAdmin(true)
+    }
+  }, [cookies, id])
+
+  // Attempts to retrieve auth token.
+  useEffect(() => {
+    if (getAdminTokenData) {
+      const { token, isValid } = getAdminTokenData.getAdminToken
+      if (isValid && !!token) {
+        setCookies(id, token, { path: '/' })
+      }
+    }
+  }, [getAdminTokenData, id, setCookies])
+
   const [deleteRoom] = useMutation(DELETE_ROOM_MUTATION, {
     onCompleted: () => {
       toast.success('Room deleted')
@@ -49,28 +86,47 @@ const Room = ({ room }) => {
     }
   }
 
-  console.log(room.createdAt)
+  const getToken = async () => {
+    const secret = prompt("What's the secret?")
+    getAdminToken({
+      variables: { input: { roomId: id, secret } },
+    })
+  }
 
   return (
     <>
+      {isAdmin && <p className="text-5xl">YOU ARE THE ADMINNNNN</p>}
       <WhitePadding>
         <div className="text-center">
-          <h1>{room.title}</h1>
+          <h1>{title}</h1>
         </div>
       </WhitePadding>
       <nav className="rw-button-group">
-        <Link
-          to={routes.editRoom({ id: room.id })}
-          className="rw-button rw-button-blue"
-        >
-          Edit
-        </Link>
-        <button
-          className="rw-button rw-button-red"
-          onClick={() => onDeleteClick(room.id)}
-        >
-          Delete
-        </button>
+        {isAdmin && (
+          <>
+            <Link
+              to={routes.editRoom({ id })}
+              className="rw-button rw-button-blue"
+            >
+              Edit
+            </Link>
+            <button
+              className="rw-button rw-button-red"
+              onClick={() => onDeleteClick(id)}
+            >
+              Delete
+            </button>
+          </>
+        )}
+        {getAdminTokenLoading ? (
+          '...'
+        ) : (
+          <button onClick={getToken}>
+            <span role="img" aria-label="padlock">
+              🔒
+            </span>
+          </button>
+        )}
       </nav>
     </>
   )

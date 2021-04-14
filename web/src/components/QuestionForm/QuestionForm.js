@@ -19,7 +19,6 @@ import {
 const QuestionForm = (props) => {
   const { username } = useContext(AppContext)
 
-  const { roomId } = props
   const onSubmit = (data) => {
     props.onSave(data, props?.question?.id)
   }
