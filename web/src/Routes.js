@@ -10,10 +10,10 @@
 import { Router, Route, Set } from '@redwoodjs/router'
 import { GlobalLayout } from './layouts/GlobalLayout'
 
-const Routes = () => {
+const Routes = ({ username }) => {
   return (
     <Router>
-      <Set wrap={[GlobalLayout]}>
+      <Set wrap={GlobalLayout} username={username}>
         <Route path="/questions/new" page={NewQuestionPage} name="newQuestion" />
         <Route path="/questions/{id}/edit" page={EditQuestionPage} name="editQuestion" />
         <Route path="/questions/{id}" page={QuestionPage} name="question" />
