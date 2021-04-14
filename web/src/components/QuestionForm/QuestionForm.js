@@ -1,20 +1,24 @@
+import { useContext } from 'react'
+import { AppContext } from 'src/context/AppContext'
 import {
   Form,
   FormError,
   FieldError,
   Label,
   TextField,
-  NumberField,
   Submit,
+  HiddenField,
 } from '@redwoodjs/forms'
 
-const formatDatetime = (value) => {
-  if (value) {
-    return value.replace(/:\d{2}\.\d{3}\w/, '')
-  }
-}
+// const formatDatetime = (value) => {
+//   if (value) {
+//     return value.replace(/:\d{2}\.\d{3}\w/, '')
+//   }
+// }
 
 const QuestionForm = (props) => {
+  const { username } = useContext(AppContext)
+
   const { roomId } = props
   const onSubmit = (data) => {
     props.onSave(data, props?.question?.id)
@@ -30,15 +34,10 @@ const QuestionForm = (props) => {
           listClassName="rw-form-error-list"
         />
 
-        <Label
+        <HiddenField
           name="username"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Username
-        </Label>
-        <TextField
-          name="username"
+          hidden
+          value={username}
           defaultValue={props.question?.username}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
