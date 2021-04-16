@@ -62,7 +62,7 @@ const QuestionForm = (props) => {
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">
-            Save
+            Ask!
           </Submit>
         </div>
       </Form>
