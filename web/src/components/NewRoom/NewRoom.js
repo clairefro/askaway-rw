@@ -4,7 +4,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import RoomForm from 'src/components/RoomForm'
 import { WhitePadding } from 'src/components/custom/blocks/WhitePadding'
 
-import { QUERY } from 'src/components/RoomsCell'
+// import { QUERY } from 'src/components/RoomsCell'
 
 const CREATE_ROOM_MUTATION = gql`
   mutation CreateRoomMutation($input: CreateRoomInput!) {
@@ -15,6 +15,7 @@ const CREATE_ROOM_MUTATION = gql`
 `
 
 const NewRoom = () => {
+  // TODO: set admin to true by default
   const [createRoom, { loading, error }] = useMutation(CREATE_ROOM_MUTATION, {
     onCompleted: (e) => {
       const id = e.createRoom.id

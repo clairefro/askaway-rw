@@ -7,7 +7,6 @@ export const QUERY = gql`
   query FIND_ROOM_BY_ID($id: String!) {
     room: room(id: $id) {
       id
-      secret
       createdAt
       updatedAt
     }
@@ -17,7 +16,6 @@ const UPDATE_ROOM_MUTATION = gql`
   mutation UpdateRoomMutation($id: String!, $input: UpdateRoomInput!) {
     updateRoom(id: $id, input: $input) {
       id
-      secret
       createdAt
       updatedAt
     }
