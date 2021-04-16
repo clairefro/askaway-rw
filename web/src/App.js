@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { FatalErrorBoundary } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 import { AppContext } from './context/AppContext'
+import { randomUsername } from './utils/randomUsername'
 
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
@@ -10,7 +11,7 @@ import './scaffold.css'
 import './index.css'
 
 const App = () => {
-  const [username, setUsername] = useState('foo')
+  const [username, setUsername] = useState(null)
 
   const context = {
     username,
@@ -18,7 +19,9 @@ const App = () => {
   }
 
   useEffect(() => {
-    console.log('APP', { username })
+    if (!username) {
+      setUsername(randomUsername())
+    }
   }, [username])
 
   return (

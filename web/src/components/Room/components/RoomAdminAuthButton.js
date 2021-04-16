@@ -31,6 +31,7 @@ export const RoomAdminAuthButton = ({ isAdmin, roomId }) => {
 
   const getToken = async () => {
     const secret = prompt("What's the secret?")
+
     getAdminToken({
       variables: { input: { roomId, secret } },
     })
