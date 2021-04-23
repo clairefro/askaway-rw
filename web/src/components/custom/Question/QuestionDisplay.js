@@ -1,11 +1,12 @@
 import React from 'react'
 import { toast } from '@redwoodjs/web/toast'
-
 import { useMutation } from '@redwoodjs/web'
 import { UpvoteButton } from './UpvoteButton'
 import { Link, routes } from '@redwoodjs/router'
 import { QUERY } from '../../QuestionsCell'
 import { FromNow } from '../blocks/FromNow'
+import { WhitePadding } from '../blocks/padding/WhitePadding'
+import { useShittyAuth } from '../../../hooks/useShittyAuth'
 
 const DELETE_QUESTION_MUTATION = gql`
   mutation DeleteQuestionMutation($id: String!) {
@@ -15,7 +16,10 @@ const DELETE_QUESTION_MUTATION = gql`
   }
 `
 
-export const QuestionDisplay = ({ question, isAdmin }) => {
+export const QuestionDisplay = ({ question }) => {
+  const { checkAdmin } = useShittyAuth()
+  const isAdmin = checkAdmin({ roomId: question.roomId })
+
   const [deleteQuestion] = useMutation(DELETE_QUESTION_MUTATION, {
     onCompleted: () => {
       toast.success('Question deleted')
@@ -34,38 +38,40 @@ export const QuestionDisplay = ({ question, isAdmin }) => {
   }
 
   return (
-    <div>
-      <div className="p-4 flex justify-between">
-        <div>
-          <p>{question.body}</p>
-          <div className="text-sm mt-2">
-            <p>
-              by <span className="font-semibold">{question.username}</span> -{' '}
-              <FromNow>{question.createdAt}</FromNow>
-            </p>
+    <div style={{ animation: `fadeIn 0.5s` }}>
+      <WhitePadding className="my-1">
+        <div className="p-4 flex justify-between ">
+          <div>
+            <p>{question.body}</p>
+            <div className="text-sm mt-2 text-pink-900">
+              <p>
+                by <span className="font-semibold">{question.username}</span> -{' '}
+                <FromNow>{question.createdAt}</FromNow>
+              </p>
+            </div>
+          </div>
+          <div>
+            {question.votes}
+            <UpvoteButton question={question} />
           </div>
         </div>
-        <div>
-          {question.votes}
-          <UpvoteButton question={question} />
-        </div>
-      </div>
-      {isAdmin && (
-        <nav className="rw-button-group">
-          <Link
-            to={routes.editQuestion({ id: question.id })}
-            className="rw-button rw-button-small rw-button-blue"
-          >
-            Edit
-          </Link>
-          <button
-            className="rw-button rw-button-small rw-button-red"
-            onClick={() => onDeleteClick(question.id)}
-          >
-            Delete
-          </button>
-        </nav>
-      )}
+        {isAdmin && (
+          <div className="flex justify-end">
+            <Link
+              to={routes.editQuestion({ id: question.id })}
+              className="rw-button rw-button-small rw-button-blue"
+            >
+              Edit
+            </Link>
+            <button
+              className="rw-button rw-button-small rw-button-red"
+              onClick={() => onDeleteClick(question.id)}
+            >
+              Delete
+            </button>
+          </div>
+        )}
+      </WhitePadding>
     </div>
   )
 }

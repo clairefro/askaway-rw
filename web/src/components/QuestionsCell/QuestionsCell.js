@@ -1,4 +1,4 @@
-import Questions from 'src/components/Questions'
+import Questions from 'src/components/QuestionsList'
 
 export const QUERY = gql`
   query QUESTIONS($roomId: String!) {

@@ -38,7 +38,7 @@ export const Success = ({ question }) => {
     {
       onCompleted: () => {
         toast.success('Question updated')
-        navigate(routes.questions())
+        navigate(routes.room({ id: question.roomId }))
       },
     }
   )

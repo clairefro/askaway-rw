@@ -1,6 +1,5 @@
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { navigate, routes } from '@redwoodjs/router'
 import QuestionForm from 'src/components/QuestionForm'
 
 import { QUERY } from 'src/components/QuestionsCell'
@@ -19,8 +18,7 @@ const NewQuestion = ({ roomId }) => {
     CREATE_QUESTION_MUTATION,
     {
       onCompleted: () => {
-        toast.success('Question created')
-        navigate(routes.room({ id: roomId }))
+        toast.success('Thanks for your question!')
       },
       refetchQueries: [{ query: QUERY, variables: { roomId } }],
       awaitRefetchQueries: true,
