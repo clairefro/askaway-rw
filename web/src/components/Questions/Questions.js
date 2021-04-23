@@ -40,7 +40,7 @@ const DELETE_QUESTION_MUTATION = gql`
 //   return <input type="checkbox" checked={checked} disabled />
 // }
 
-const QuestionsList = ({ questions }) => {
+const QuestionsList = ({ questions, isAdmin }) => {
   const [deleteQuestion] = useMutation(DELETE_QUESTION_MUTATION, {
     onCompleted: () => {
       toast.success('Question deleted')
@@ -62,7 +62,8 @@ const QuestionsList = ({ questions }) => {
     <WhitePadding>
       {questions.map((question) => (
         <div key={question.id}>
-          <QuestionDisplay question={question} />
+          <QuestionDisplay question={question} isAdmin={isAdmin} />
+
           <nav className="rw-table-actions">
             <Link
               to={routes.question({ id: question.id })}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar } from '../components/custom/Navbar/index'
+import { Navbar } from '../components/custom/Navbar'
 import { Container } from '../components/custom/blocks/Container'
 import { Toaster } from '@redwoodjs/web/toast'
 

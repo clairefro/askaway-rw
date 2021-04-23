@@ -2,7 +2,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { Link, routes, navigate } from '@redwoodjs/router'
 
-import { QUERY } from 'src/components/QuestionsCell'
+// import { QUERY } from 'src/components/QuestionsCell'
 
 const DELETE_QUESTION_MUTATION = gql`
   mutation DeleteQuestionMutation($id: String!) {
@@ -12,24 +12,12 @@ const DELETE_QUESTION_MUTATION = gql`
   }
 `
 
-const jsonDisplay = (obj) => {
-  return (
-    <pre>
-      <code>{JSON.stringify(obj, null, 2)}</code>
-    </pre>
-  )
-}
-
 const timeTag = (datetime) => {
   return (
     <time dateTime={datetime} title={datetime}>
       {new Date(datetime).toUTCString()}
     </time>
   )
-}
-
-const checkboxInputTag = (checked) => {
-  return <input type="checkbox" checked={checked} disabled />
 }
 
 const Question = ({ question }) => {
@@ -94,13 +82,12 @@ const Question = ({ question }) => {
         >
           Edit
         </Link>
-        <a
-          href="#"
+        <button
           className="rw-button rw-button-red"
           onClick={() => onDeleteClick(question.id)}
         >
           Delete
-        </a>
+        </button>
       </nav>
     </>
   )

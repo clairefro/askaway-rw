@@ -41,7 +41,7 @@ export const RoomAdminAuthButton = ({ isAdmin, roomId }) => {
 
   if (isAdmin) {
     return (
-      <span role="img" aria-label="star">
+      <span role="img" aria-label="star" title="You are admin">
         ⭐
       </span>
     )
@@ -49,7 +49,7 @@ export const RoomAdminAuthButton = ({ isAdmin, roomId }) => {
 
   return (
     <button onClick={getToken}>
-      <span role="img" aria-label="padlock">
+      <span role="img" aria-label="padlock" title="Unlock room">
         🔒
       </span>
     </button>

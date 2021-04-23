@@ -46,7 +46,6 @@ const Room = ({ room }) => {
 
   return (
     <>
-      {isAdmin && <p className="text-5xl">YOU ARE THE ADMINNNNN</p>}
       <WhitePadding>
         <div className="text-center">
           <h1>{title}</h1>
