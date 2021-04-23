@@ -9,7 +9,6 @@ export const FromNow = ({ children }) => {
   useEffect(() => {
     // trigger re-render every 60 seconds
     const tick = setInterval(() => {
-      console.log('ticking')
       setRefresh(new Date().getTime())
     }, 60 * 1000)
 
