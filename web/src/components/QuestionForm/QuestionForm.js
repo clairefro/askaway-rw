@@ -6,15 +6,9 @@ import {
   FieldError,
   Label,
   TextField,
-  Submit,
   HiddenField,
 } from '@redwoodjs/forms'
-
-// const formatDatetime = (value) => {
-//   if (value) {
-//     return value.replace(/:\d{2}\.\d{3}\w/, '')
-//   }
-// }
+import { ButtonPrimary } from '../custom/blocks/buttons/ButtonPrimary'
 
 const QuestionForm = (props) => {
   const { username } = useContext(AppContext)
@@ -61,9 +55,9 @@ const QuestionForm = (props) => {
         <FieldError name="body" className="rw-field-error" />
 
         <div className="rw-button-group">
-          <Submit disabled={props.loading} className="rw-button rw-button-blue">
+          <ButtonPrimary type="submit" disabled={props.loading}>
             Ask!
-          </Submit>
+          </ButtonPrimary>
         </div>
       </Form>
     </div>

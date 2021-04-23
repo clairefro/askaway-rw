@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { Link, routes, navigate } from '@redwoodjs/router'
+import { routes, navigate } from '@redwoodjs/router'
 import { WhitePadding } from 'src/components/custom/blocks/WhitePadding'
 import { RoomAdminAuthButton } from './components/RoomAdminAuthButton'
 import { useCookies } from 'react-cookie'
+import { ButtonSecondary } from '../custom/blocks/buttons/ButtonSecondary'
+import { ButtonDanger } from '../custom/blocks/buttons/ButtonDanger'
+import { ButtonGroup } from '../custom/blocks/buttons/ButtonGroup'
 
 const DELETE_ROOM_MUTATION = gql`
   mutation DeleteRoomMutation($id: String!) {
@@ -39,7 +42,7 @@ const Room = ({ room }) => {
   })
 
   const onDeleteClick = (id) => {
-    if (confirm('Are you sure you want to delete room ' + id + '?')) {
+    if (confirm(`Are you sure you want to delete room '${room.title}'?`)) {
       deleteRoom({ variables: { id } })
     }
   }
@@ -49,27 +52,20 @@ const Room = ({ room }) => {
       <WhitePadding>
         <div className="text-center">
           <h1>{title}</h1>
+          <RoomAdminAuthButton isAdmin={isAdmin} roomId={id} />
         </div>
       </WhitePadding>
-      <nav className="rw-button-group">
-        {isAdmin && (
-          <>
-            <Link
-              to={routes.editRoom({ id })}
-              className="rw-button rw-button-blue"
-            >
-              Edit
-            </Link>
-            <button
-              className="rw-button rw-button-red"
-              onClick={() => onDeleteClick(id)}
-            >
-              Delete
-            </button>
-          </>
-        )}
-        <RoomAdminAuthButton isAdmin={isAdmin} roomId={id} />
-      </nav>
+      {isAdmin && (
+        <ButtonGroup>
+          <ButtonSecondary
+            onClick={() => navigate(routes.editRoom({ id }))}
+            className="mr-2"
+          >
+            Edit
+          </ButtonSecondary>
+          <ButtonDanger onClick={() => onDeleteClick(id)}>Delete</ButtonDanger>
+        </ButtonGroup>
+      )}
     </>
   )
 }

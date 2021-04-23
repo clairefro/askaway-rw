@@ -1,11 +1,6 @@
-import {
-  Form,
-  FormError,
-  FieldError,
-  Label,
-  TextField,
-  Submit,
-} from '@redwoodjs/forms'
+import { ButtonPrimary } from '../custom/blocks/buttons/ButtonPrimary'
+import { ButtonGroup } from '../custom/blocks/buttons/ButtonGroup'
+import { Form, FormError, FieldError, Label, TextField } from '@redwoodjs/forms'
 
 const RoomForm = (props) => {
   const onSubmit = (data) => {
@@ -53,12 +48,11 @@ const RoomForm = (props) => {
           validation={{ required: true }}
         />
         <FieldError name="secret" className="rw-field-error" />
-
-        <div className="rw-button-group">
-          <Submit disabled={props.loading} className="rw-button rw-button-blue">
-            Save
-          </Submit>
-        </div>
+        <ButtonGroup>
+          <ButtonPrimary type="submit" disabled={props.loading}>
+            Create room
+          </ButtonPrimary>
+        </ButtonGroup>
       </Form>
     </div>
   )
