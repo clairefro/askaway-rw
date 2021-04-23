@@ -5,6 +5,7 @@ import { useMutation } from '@redwoodjs/web'
 import { UpvoteButton } from './UpvoteButton'
 import { Link, routes } from '@redwoodjs/router'
 import { QUERY } from '../../QuestionsCell'
+import { FromNow } from '../blocks/FromNow'
 
 const DELETE_QUESTION_MUTATION = gql`
   mutation DeleteQuestionMutation($id: String!) {
@@ -39,8 +40,8 @@ export const QuestionDisplay = ({ question, isAdmin }) => {
           <p>{question.body}</p>
           <div className="text-sm mt-2">
             <p>
-              by <span className="font-semibold">{question.username}</span> at{' '}
-              {question.createdAt}
+              by <span className="font-semibold">{question.username}</span> -{' '}
+              <FromNow>{question.createdAt}</FromNow>
             </p>
           </div>
         </div>

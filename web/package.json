@@ -19,6 +19,7 @@
     "@redwoodjs/web": "^0.28.0",
     "@supabase/realtime-js": "1.0.6",
     "classnames": "2.3.1",
+    "date-fns": "2.21.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-cookie": "4.0.3",
