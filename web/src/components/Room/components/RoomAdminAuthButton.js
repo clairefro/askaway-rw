@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useLazyQuery } from '@apollo/client' // SHADY
 import { useCookies } from 'react-cookie'
+import { toast } from '@redwoodjs/web/toast'
 
 const GET_ADMIN_TOKEN_QUERY = gql`
   query GetAdminToken($input: GetAdminTokenInput!) {
@@ -23,8 +24,9 @@ export const RoomAdminAuthButton = ({ isAdmin, roomId }) => {
       const { token, isValid } = getAdminTokenData.getAdminToken
       if (isValid && !!token) {
         setCookies(roomId, token, { path: '/' })
+        toast.success('You are now room admin!')
       } else {
-        alert('No!')
+        toast.error('No!')
       }
     }
   }, [getAdminTokenData, roomId, setCookies])

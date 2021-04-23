@@ -3,7 +3,7 @@ import { toast } from '@redwoodjs/web/toast'
 import { Link, routes } from '@redwoodjs/router'
 
 import { QUERY } from 'src/components/QuestionsCell'
-import { WhitePadding } from 'src/components/custom/blocks/WhitePadding'
+import { WhitePadding } from 'src/components/custom/blocks/padding/WhitePadding'
 import { QuestionDisplay } from '../custom/Question/QuestionDisplay'
 
 const DELETE_QUESTION_MUTATION = gql`
