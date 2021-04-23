@@ -2,7 +2,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { navigate, routes } from '@redwoodjs/router'
 import RoomForm from 'src/components/RoomForm'
-import { PurplePadding } from '../custom/blocks/padding/PurplePadding'
+import { FormWrapper } from '../custom/blocks/FormWrapper'
 
 const CREATE_ROOM_MUTATION = gql`
   mutation CreateRoomMutation($input: CreateRoomInput!) {
@@ -27,10 +27,9 @@ const NewRoom = () => {
   }
 
   return (
-    <PurplePadding>
-      <h2>Create a room</h2>
+    <FormWrapper title="Create a room">
       <RoomForm onSave={onSave} loading={loading} error={error} />
-    </PurplePadding>
+    </FormWrapper>
   )
 }
 

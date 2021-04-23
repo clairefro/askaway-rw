@@ -4,6 +4,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import QuestionForm from 'src/components/QuestionForm'
 
 import { QUERY } from 'src/components/QuestionsCell'
+import { FormWrapper } from '../custom/blocks/FormWrapper'
 
 const CREATE_QUESTION_MUTATION = gql`
   mutation CreateQuestionMutation($input: CreateQuestionInput!) {
@@ -33,14 +34,9 @@ const NewQuestion = ({ roomId }) => {
   }
 
   return (
-    <div className="rw-segment">
-      <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">New Question</h2>
-      </header>
-      <div className="rw-segment-main">
-        <QuestionForm onSave={onSave} loading={loading} error={error} />
-      </div>
-    </div>
+    <FormWrapper title="Have a question?">
+      <QuestionForm onSave={onSave} loading={loading} error={error} />
+    </FormWrapper>
   )
 }
 

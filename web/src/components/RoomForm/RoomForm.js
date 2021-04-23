@@ -49,7 +49,7 @@ const RoomForm = (props) => {
       <FieldError name="secret" className="rw-field-error" />
       <ButtonGroup>
         <ButtonPrimary type="submit" disabled={props.loading}>
-          Create room
+          Go
         </ButtonPrimary>
       </ButtonGroup>
     </Form>
