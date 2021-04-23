@@ -26,5 +26,12 @@ export const UpvoteButton = ({ question }) => {
   const handleClick = () => {
     upvoteQuestion({ variables: { id } })
   }
-  return <button onClick={handleClick}>⬆</button>
+  return (
+    <button
+      className="upvote-button hover:text-green-500"
+      onClick={handleClick}
+    >
+      ⬆
+    </button>
+  )
 }
