@@ -1,0 +1,10 @@
+@startuml Auth flow
+
+WEB -> API: request token validation { roomId, token }
+API -> DB: request room by roomId
+DB -> API: return room
+API -> API: ensure room exists
+API -> API: resconstruct token from db room.createdAt, compare with decoded web token
+API -> WEB: reutrn { isValid }
+
+@enduml

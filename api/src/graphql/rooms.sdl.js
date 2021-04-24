@@ -12,10 +12,15 @@ export const schema = gql`
     token: String
   }
 
+  type ValidateTokenReturnObj {
+    isValid: Boolean!
+  }
+
   type Query {
     rooms: [Room!]!
     room(id: String!): Room
-    getAdminToken(input: GetAdminTokenInput): GetAdminTokenReturnObj!
+    getAdminToken(input: GetAdminTokenInput!): GetAdminTokenReturnObj!
+    validateToken(input: ValidateTokenInput!): ValidateTokenReturnObj!
   }
 
   input CreateRoomInput {
@@ -31,6 +36,11 @@ export const schema = gql`
   input GetAdminTokenInput {
     roomId: String!
     secret: String!
+  }
+
+  input ValidateTokenInput {
+    roomId: String!
+    token: String!
   }
 
   type Mutation {

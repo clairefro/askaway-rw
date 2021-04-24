@@ -17,8 +17,8 @@ const DELETE_QUESTION_MUTATION = gql`
 `
 
 export const QuestionDisplay = ({ question }) => {
-  const { checkAdmin } = useShittyAuth()
-  const isAdmin = checkAdmin({ roomId: question.roomId })
+  const { getIsAdmin } = useShittyAuth()
+  const isAdmin = getIsAdmin({ roomId: question.roomId })
 
   const [deleteQuestion] = useMutation(DELETE_QUESTION_MUTATION, {
     onCompleted: () => {

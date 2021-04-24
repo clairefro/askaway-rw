@@ -13,3 +13,11 @@ export const compare = async (plainText, hash) => {
   const isValid = await bcrypt.compare(plainText, hash)
   return isValid
 }
+
+/** Builds a token based on passed room object */
+export const buildRawToken = (room) => {
+  if (!room.createdAt) throw new Error('Failed to build token')
+  return `${new Date(room.createdAt).getTime().toString()}_${
+    process.env.API_TOKEN_SECRET
+  }`
+}

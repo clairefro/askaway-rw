@@ -5,7 +5,11 @@ import {
   updateRoom,
   deleteRoom,
   getAdminToken,
+  validateToken,
 } from './rooms'
+
+const SECRET = 'secret'
+const TITLE = 'Title'
 
 describe('rooms', () => {
   describe('rooms()', () => {
@@ -40,9 +44,6 @@ describe('rooms', () => {
 
   describe('createRoom()', () => {
     scenario('creates a room', async () => {
-      const SECRET = 'secret'
-      const TITLE = 'Title'
-
       const result = await createRoom({
         input: { title: TITLE, secret: SECRET },
       })
@@ -66,6 +67,38 @@ describe('rooms', () => {
 
       expect(result.id).toBeDefined()
       expect(result.secret).toBeUndefined() // hide secret from public view
+    })
+  })
+
+  describe('validateToken()', () => {
+    scenario('returns true for valid token', async (_scenario) => {
+      const room = await createRoom({
+        input: { title: TITLE, secret: SECRET },
+      })
+
+      const { token } = await getAdminToken({
+        input: { roomId: room.id, secret: SECRET },
+      })
+
+      const result = await validateToken({ input: { roomId: room.id, token } })
+
+      expect(result.isValid).toBe(true)
+    })
+
+    scenario('returns false for invalid token', async (_scenario) => {
+      const room = await createRoom({
+        input: { title: TITLE, secret: SECRET },
+      })
+
+      const { token } = await getAdminToken({
+        input: { roomId: room.id, secret: SECRET },
+      })
+
+      const result = await validateToken({
+        input: { roomId: room.id, token: token + 'foo' },
+      })
+
+      expect(result.isValid).toBe(false)
     })
   })
 
