@@ -1,4 +1,4 @@
-import Questions from 'src/components/QuestionsList'
+import QuestionsList from 'src/components/QuestionsList'
 
 export const QUERY = gql`
   query QUESTIONS($roomId: String!) {
@@ -28,6 +28,6 @@ export const Empty = () => {
   return <div className="rw-text-center">{'No questions yet. '}</div>
 }
 
-export const Success = ({ questions }) => {
-  return <Questions questions={questions} />
+export const Success = ({ questions, isAdmin }) => {
+  return <QuestionsList questions={questions} isAdmin={isAdmin} />
 }

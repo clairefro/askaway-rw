@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt'
+import { btoa } from './b64'
 
 const SALT_ROUNDS = 10
 
@@ -15,9 +16,17 @@ export const compare = async (plainText, hash) => {
 }
 
 /** Builds a token based on passed room object */
-export const buildRawToken = (room) => {
+export const buildRawB64Token = (room) => {
   if (!room.createdAt) throw new Error('Failed to build token')
-  return `${new Date(room.createdAt).getTime().toString()}_${
+  const tokenRaw = `${new Date(room.createdAt).getTime().toString()}_${
     process.env.API_TOKEN_SECRET
   }`
+  return btoa(tokenRaw)
+}
+
+/** Builds a token based on passed room object */
+export const buildHashedB64Token = async (room) => {
+  const tokenB64 = buildRawB64Token(room)
+  const tokenHash = await hash(tokenB64)
+  return tokenHash
 }

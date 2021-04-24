@@ -15,6 +15,6 @@ export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => <div>Room not found</div>
 
-export const Success = ({ room }) => {
-  return <Room room={room} />
+export const Success = ({ room, isAdmin }) => {
+  return <Room room={room} isAdmin={isAdmin} />
 }

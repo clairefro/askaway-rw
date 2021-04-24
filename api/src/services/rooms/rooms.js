@@ -1,12 +1,18 @@
 import { db } from 'src/lib/db'
-import { hash, compare, buildRawToken } from '../../utils/encryption'
+import {
+  hash,
+  compare,
+  buildRawB64Token,
+  buildHashedB64Token,
+} from '../../utils/encryption'
 import { btoa, atob } from '../../utils/b64'
 
-const publicRoom = ({ id, createdAt, updatedAt, title }) => ({
+const publicRoom = ({ id, createdAt, updatedAt, title, token }) => ({
   id,
   title,
   createdAt,
   updatedAt,
+  token,
 })
 
 export const rooms = () => {
@@ -30,6 +36,11 @@ export const createRoom = async ({ input }) => {
   return db.room
     .create({
       data: encryptedInput,
+    })
+    .then(async (room) => {
+      const tokenHash = await buildHashedB64Token(room)
+      const roomWithToken = { ...room, token: tokenHash }
+      return roomWithToken
     })
     .then(publicRoom)
 }
@@ -75,7 +86,7 @@ export const getAdminToken = async ({ input }) => {
 
   // Generate shitty token
   // shitty handshake will be hashed {createdAt}_{API_TOKEN_SECRET}
-  const encodedTokenHash = await hash(btoa(buildRawToken(room)))
+  const encodedTokenHash = await buildHashedB64Token(room)
 
   // if valid, issue hashed token object as b64 string
   if (isValid) {
@@ -86,7 +97,6 @@ export const getAdminToken = async ({ input }) => {
     const token = btoa(JSON.stringify(tokenObj))
     return { token, isValid: true }
   }
-  // else return false
   return { isValid: false }
 }
 
@@ -95,6 +105,7 @@ export const validateToken = async ({ input }) => {
     const { token: tokenObjWeb64, roomId } = input
 
     const { token: tokenHashWeb } = JSON.parse(atob(tokenObjWeb64))
+    console.log({ tokenHashWeb })
 
     // Get room (ensure exists)
     const room = await db.room.findUnique({
@@ -103,7 +114,7 @@ export const validateToken = async ({ input }) => {
     if (!room) throw new Error(`Room with id '${roomId}' not found`)
 
     // reconstruct raw token from DB for comparison
-    const tokenDbRaw = btoa(buildRawToken(room))
+    const tokenDbRaw = buildRawB64Token(room)
 
     // compare raw token with decoded web token hash
     const isValid = await compare(tokenDbRaw, tokenHashWeb)

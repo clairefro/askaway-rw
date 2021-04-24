@@ -1,10 +1,18 @@
-export const schema = gql`
-  type Room {
+const roomFields = `
     id: String!
     title: String!
     secret: String!
     createdAt: DateTime!
     updatedAt: DateTime!
+`
+export const schema = gql`
+  type Room {
+    ${roomFields}
+  }
+
+  type RoomWithToken {
+    ${roomFields}
+    token: String!
   }
 
   type GetAdminTokenReturnObj {
@@ -44,7 +52,7 @@ export const schema = gql`
   }
 
   type Mutation {
-    createRoom(input: CreateRoomInput!): Room!
+    createRoom(input: CreateRoomInput!): RoomWithToken!
     updateRoom(id: String!, input: UpdateRoomInput!): Room!
     deleteRoom(id: String!): Room!
   }

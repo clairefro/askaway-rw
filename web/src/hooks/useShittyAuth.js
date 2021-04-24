@@ -1,5 +1,6 @@
 import { useCookies } from 'react-cookie'
-import { useLazyQuery } from '@apollo/client' // SHADY
+import { useApolloClient } from '@apollo/client' // SHADY
+import { useState, useEffect } from 'react'
 
 const GET_ADMIN_TOKEN_QUERY = gql`
   query GetAdminToken($input: GetAdminTokenInput!) {
@@ -10,33 +11,48 @@ const GET_ADMIN_TOKEN_QUERY = gql`
   }
 `
 
+const VALIDATE_TOKEN_QUERY = gql`
+  query ValidateToken($input: ValidateTokenInput!) {
+    validateToken(input: $input) {
+      isValid
+    }
+  }
+`
+
 export const useShittyAuth = () => {
-  const [getAdminToken, { loading, data: getAdminTokenData }] = useLazyQuery(
-    GET_ADMIN_TOKEN_QUERY
-  )
-  const [cookies, _setCookie] = useCookies()
+  const [isAdmin, setIsAdmin] = useState(false)
+  // const [getAdminToken] = useLazyQuery(GET_ADMIN_TOKEN_QUERY)
 
-  const getIsAdmin = ({ roomId }) => {
-    return !!cookies[roomId]
-    // TODO: validate token in backend
-  }
+  const [_cookies, setCookie] = useCookies()
+  const client = useApolloClient()
 
-  const silentAuth = async ({ secret, roomId }) => {
-    const token = getAdminToken({
-      variables: { input: { roomId, secret } },
+  useEffect(() => {
+    console.log({ isAdmin })
+  }, [isAdmin])
+
+  const grantAdmin = ({ token, roomId }) => {
+    setCookie(roomId, token, {
+      path: '/',
+      encode: (val) => decodeURIComponent(val), // was encoding value here only for some reason
     })
-    return token
   }
 
-  // const validateToken = async ({ roomId, token }) => {
-  //   const token = getAdminToken({
-  //     variables: { input: { roomId, secret } },
-  //   })
-  //   return token
-  // }
+  const verifyToken = async (input) => {
+    const res = await client.query({
+      query: VALIDATE_TOKEN_QUERY,
+      variables: {
+        input,
+      },
+    })
+    if (res?.data?.validateToken) {
+      const { isValid } = res.data.validateToken
+      setIsAdmin(isValid)
+    }
+  }
 
   return {
-    getIsAdmin,
-    silentAuth,
+    verifyToken,
+    grantAdmin,
+    isAdmin,
   }
 }

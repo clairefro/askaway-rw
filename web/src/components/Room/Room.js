@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { routes, navigate } from '@redwoodjs/router'
 import { WhitePadding } from 'src/components/custom/blocks/padding/WhitePadding'
 import { RoomAdminAuthButton } from './components/RoomAdminAuthButton'
-import { useCookies } from 'react-cookie'
 import { ButtonSecondary } from '../custom/blocks/buttons/ButtonSecondary'
 import { ButtonDanger } from '../custom/blocks/buttons/ButtonDanger'
 import { ButtonGroup } from '../custom/blocks/buttons/ButtonGroup'
@@ -17,22 +15,8 @@ const DELETE_ROOM_MUTATION = gql`
   }
 `
 
-const Room = ({ room }) => {
+const Room = ({ room, isAdmin }) => {
   const { id, title } = room
-  const [cookies, _setCookies] = useCookies()
-  const [isAdmin, setIsAdmin] = useState(false)
-
-  // check room admin on mount and cookie change
-  useEffect(() => {
-    const token = cookies[id]
-    if (!token) {
-      setIsAdmin(false)
-    } else {
-      // TODO: check token for validity
-
-      setIsAdmin(true)
-    }
-  }, [cookies, id])
 
   const [deleteRoom] = useMutation(DELETE_ROOM_MUTATION, {
     onCompleted: () => {

@@ -43,13 +43,14 @@ describe('rooms', () => {
   })
 
   describe('createRoom()', () => {
-    scenario('creates a room', async () => {
+    scenario('creates a room and returns token', async () => {
       const result = await createRoom({
         input: { title: TITLE, secret: SECRET },
       })
 
       expect(result.id).toBeDefined()
       expect(result.title).toMatch(TITLE)
+      expect(result.token).toBeDefined()
       expect(result.secret).toBeUndefined() // hide secret from public view
     })
   })

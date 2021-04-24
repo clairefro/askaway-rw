@@ -16,10 +16,8 @@ const DELETE_QUESTION_MUTATION = gql`
   }
 `
 
-export const QuestionDisplay = ({ question }) => {
-  const { getIsAdmin } = useShittyAuth()
-  const isAdmin = getIsAdmin({ roomId: question.roomId })
-
+export const QuestionDisplay = ({ question, isAdmin }) => {
+  console.log('question admin', isAdmin)
   const [deleteQuestion] = useMutation(DELETE_QUESTION_MUTATION, {
     onCompleted: () => {
       toast.success('Question deleted')
