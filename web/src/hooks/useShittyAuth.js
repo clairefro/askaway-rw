@@ -44,9 +44,25 @@ export const useShittyAuth = () => {
     }
   }
 
+  const getAdminToken = async (input) => {
+    const res = await client.query({
+      query: GET_ADMIN_TOKEN_QUERY,
+      variables: {
+        input,
+      },
+    })
+    if (res?.data?.getAdminToken) {
+      const { isValid, token } = res.data.getAdminToken
+      setIsAdmin(isValid)
+      return { isValid, token }
+    }
+    return { isValid: false }
+  }
+
   return {
     verifyToken,
     grantAdmin,
     isAdmin,
+    getAdminToken,
   }
 }

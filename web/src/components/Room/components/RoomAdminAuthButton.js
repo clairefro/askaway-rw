@@ -1,42 +1,26 @@
-import React, { useEffect } from 'react'
-import { useLazyQuery } from '@apollo/client' // SHADY
+import React, { useState } from 'react'
 import { toast } from '@redwoodjs/web/toast'
 import { useShittyAuth } from '../../../hooks/useShittyAuth'
 
-const GET_ADMIN_TOKEN_QUERY = gql`
-  query GetAdminToken($input: GetAdminTokenInput!) {
-    getAdminToken(input: $input) {
-      isValid
-      token
-    }
-  }
-`
-
 export const RoomAdminAuthButton = ({ isAdmin, roomId }) => {
-  const { grantAdmin } = useShittyAuth()
-  const [getAdminToken, { loading, data: getAdminTokenData }] = useLazyQuery(
-    GET_ADMIN_TOKEN_QUERY
-  )
-
-  // Attempts to retrieve auth token.
-  useEffect(() => {
-    if (getAdminTokenData) {
-      const { token, isValid } = getAdminTokenData.getAdminToken
-      if (isValid && !!token) {
-        grantAdmin({ roomId, token })
-        toast.success('You are now room admin!')
-      } else {
-        toast.error('No!')
-      }
-    }
-  }, [getAdminTokenData, roomId, grantAdmin])
+  const { grantAdmin, getAdminToken } = useShittyAuth()
+  const [loading, setLoading] = useState(false)
 
   const getToken = async () => {
     const secret = prompt("What's the secret?")
 
-    getAdminToken({
-      variables: { input: { roomId, secret } },
-    })
+    setLoading(true)
+
+    const res = await getAdminToken({ roomId, secret })
+    const { token, isValid } = res
+    if (isValid && !!token) {
+      grantAdmin({ roomId, token })
+      toast.success('You are now room admin!')
+    } else {
+      toast.error('No!')
+    }
+
+    setLoading(false)
   }
 
   if (loading) return <span>...</span>
