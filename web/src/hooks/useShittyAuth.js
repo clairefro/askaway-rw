@@ -21,14 +21,8 @@ const VALIDATE_TOKEN_QUERY = gql`
 
 export const useShittyAuth = () => {
   const [isAdmin, setIsAdmin] = useState(false)
-  // const [getAdminToken] = useLazyQuery(GET_ADMIN_TOKEN_QUERY)
-
   const [_cookies, setCookie] = useCookies()
   const client = useApolloClient()
-
-  useEffect(() => {
-    console.log({ isAdmin })
-  }, [isAdmin])
 
   const grantAdmin = ({ token, roomId }) => {
     setCookie(roomId, token, {

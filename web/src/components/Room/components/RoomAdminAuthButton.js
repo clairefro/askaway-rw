@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useLazyQuery } from '@apollo/client' // SHADY
-import { useCookies } from 'react-cookie'
 import { toast } from '@redwoodjs/web/toast'
+import { useShittyAuth } from '../../../hooks/useShittyAuth'
 
 const GET_ADMIN_TOKEN_QUERY = gql`
   query GetAdminToken($input: GetAdminTokenInput!) {
@@ -13,7 +13,7 @@ const GET_ADMIN_TOKEN_QUERY = gql`
 `
 
 export const RoomAdminAuthButton = ({ isAdmin, roomId }) => {
-  const [_cookies, setCookies] = useCookies()
+  const { grantAdmin } = useShittyAuth()
   const [getAdminToken, { loading, data: getAdminTokenData }] = useLazyQuery(
     GET_ADMIN_TOKEN_QUERY
   )
@@ -23,13 +23,13 @@ export const RoomAdminAuthButton = ({ isAdmin, roomId }) => {
     if (getAdminTokenData) {
       const { token, isValid } = getAdminTokenData.getAdminToken
       if (isValid && !!token) {
-        setCookies(roomId, token, { path: '/' })
+        grantAdmin({ roomId, token })
         toast.success('You are now room admin!')
       } else {
         toast.error('No!')
       }
     }
-  }, [getAdminTokenData, roomId, setCookies])
+  }, [getAdminTokenData, roomId, grantAdmin])
 
   const getToken = async () => {
     const secret = prompt("What's the secret?")
