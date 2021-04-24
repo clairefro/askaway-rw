@@ -7,6 +7,7 @@ import {
 } from '../../utils/encryption'
 import { btoa, atob } from '../../utils/b64'
 
+/** Whitelist certain fields for public query */
 const publicRoom = ({ id, createdAt, updatedAt, title, token }) => ({
   id,
   title,
@@ -105,7 +106,6 @@ export const validateToken = async ({ input }) => {
     const { token: tokenObjWeb64, roomId } = input
 
     const { token: tokenHashWeb } = JSON.parse(atob(tokenObjWeb64))
-    console.log({ tokenHashWeb })
 
     // Get room (ensure exists)
     const room = await db.room.findUnique({

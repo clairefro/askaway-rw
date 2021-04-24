@@ -1,7 +1,6 @@
 const roomFields = `
     id: String!
     title: String!
-    secret: String!
     createdAt: DateTime!
     updatedAt: DateTime!
 `
