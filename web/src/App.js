@@ -4,12 +4,19 @@ import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 import { AppContext } from './context/AppContext'
 import { randomUsername } from './utils/randomUsername'
 import { useCookies } from 'react-cookie'
+import { createClient } from '@supabase/supabase-js'
+// import cache from './cache'
 
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
 
 import './scaffold.css'
 import './index.css'
+
+export const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY
+)
 
 const App = () => {
   const [cookies, setCookie] = useCookies()

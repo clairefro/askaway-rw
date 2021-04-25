@@ -28,6 +28,11 @@ const NewQuestion = ({ roomId }) => {
   const onSave = (input) => {
     createQuestion({
       variables: { input: { ...input, roomId } },
+      update: (cache, { data: { createQuestion } }) => {
+        const data = cache.readQuery({ query: QUERY, variables: { roomId } })
+        const newQuestions = [...data.questions, createQuestion]
+        cache.writeQuery({ query: QUERY, variables: { roomId } }, newQuestions)
+      },
     })
   }
 

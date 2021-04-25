@@ -18,6 +18,7 @@
     "@redwoodjs/router": "^0.28.0",
     "@redwoodjs/web": "^0.28.0",
     "@supabase/realtime-js": "1.0.6",
+    "@supabase/supabase-js": "1.11.7",
     "classnames": "2.3.1",
     "date-fns": "2.21.1",
     "prop-types": "^15.7.2",

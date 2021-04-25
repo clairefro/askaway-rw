@@ -3,7 +3,7 @@ import NewQuestion from 'src/components/NewQuestion'
 import QuestionsCell from 'src/components/QuestionsCell'
 import { useShittyAuth } from '../../hooks/useShittyAuth'
 import { useCookies } from 'react-cookie'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const RoomPage = ({ id }) => {
   const { isAdmin, verifyToken } = useShittyAuth()
