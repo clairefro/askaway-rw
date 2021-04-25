@@ -31,18 +31,18 @@ Data for rooms, questions and replies is regularly deleted. Only metadata (like 
 ## Roadmap
 - [x] hook up DB
 - [x] create rooms
-- [ ] view rooms
+- [x] view rooms
 - [x] create questions
-- [ ] view questions in room
-- [ ] upvote questions in room
-- [ ] view questions RT in room
-- [ ] set user alias
+- [x] view questions in room
+- [x] upvote questions in room
+- [/] view questions RT in room
+- [x] set user alias
 - [ ] create replies to questions
 - [ ] view replies to questions
 - [ ] view replies to questions
 - [ ] admin: select featured question
 - [ ] admin: set question to answered
-- [ ] admin: delete questions
+- [x] admin: delete questions
 - [ ] admin: delete replies
 - [ ] export to json
 - [ ] style
